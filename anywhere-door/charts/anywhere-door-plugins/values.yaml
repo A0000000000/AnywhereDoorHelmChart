@@ -1,0 +1,29 @@
+images:
+  aria2Image: "aria2插件镜像"
+  glancesImage: "glances插件镜像"
+  pveImage: "pve插件镜像"
+  k8sImage: "k8s插件镜像"
+
+aria2Config:
+  token: "aria2插件令牌"
+  name: "aria2名称"
+  aria2Rpc: "aria2 rpc地址"
+  aria2Token: "aria2 令牌"
+
+glancesConfig:
+  token: "glances插件令牌"
+  name: "glances插件名称"
+
+pveConfig:
+  token: "pve插件令牌"
+  name: "pve插件名称"
+
+k8sConfig:
+  token: "k8s插件令牌"
+  name: "k8s插件名称"
+
+global:
+  namespace: "资源所在的k8s命名空间"
+  username: "用户名"
+  scConfig:
+    name: "存储类的名称, 后续创建PV都会使用这个存储类"

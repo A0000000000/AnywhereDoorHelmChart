@@ -1,0 +1,22 @@
+images:
+  larkbotImage: "larkbot镜像"
+  wxbotImage: "wxbot镜像"
+
+larkbotConfig:
+  token: "larkbot的令牌"
+  name: "larkbot的名字"
+  appId: "larkbot的app id"
+  appSecret: "larkbot的app secret"
+  openId: "larkbot的open id"
+
+wxbotConfig:
+  adminWxid: "管理员的微信号"
+  token: "wxbot的令牌"
+  name: "wxbot的名字"
+  apiGewe: "gewe的地址"
+
+global:
+  namespace: "资源所在的k8s命名空间"
+  username: "用户名"
+  scConfig:
+    name: "存储类的名称, 后续创建PV都会使用这个存储类"

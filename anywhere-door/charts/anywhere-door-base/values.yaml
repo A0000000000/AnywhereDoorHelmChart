@@ -1,0 +1,23 @@
+scConfig:
+  secretName: "smb的secret名字"
+  secretNamespace: "secret所在的名称空间"
+  source: "smb的挂载点"
+
+images:
+  mysqlImage: "mysql的镜像名字"
+  managerImage: "后台管理的镜像名字"
+  controlPlaneImage: "控制平面的镜像"
+  managerWebUiImage: "控制平面webui的镜像"
+
+nodePorts:
+  managerWebUiPort: 80
+
+mysql:
+  dbName: "数据库名字"
+  rootPassword: "数据库root账户密码"
+
+global:
+  namespace: "资源所在的k8s命名空间"
+  username: "用户名"
+  scConfig:
+    name: "存储类的名称, 后续创建PV都会使用这个存储类"
