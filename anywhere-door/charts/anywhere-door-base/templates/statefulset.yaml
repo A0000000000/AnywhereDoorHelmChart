@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ printf "%s-mysql-statefulset" .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+spec:
+  serviceName: {{ printf "%s-mysql-service" .Values.global.namespace }}
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ printf "%s-mysql" .Values.global.namespace }}
+  template:
+    metadata:
+      labels:
+        app: {{ printf "%s-mysql" .Values.global.namespace }}
+    spec:
+      containers:
+      - name: {{ printf "%s-mysql" .Values.global.namespace }}
+        image: {{ .Values.images.mysqlImage }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: {{ .Values.mysql.rootPassword | quote }}
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: anywhere-door-mysql-storage
+          mountPath: /var/lib/mysql
+        - name: mysql-init-scripts
+          mountPath: /docker-entrypoint-initdb.d
+      restartPolicy: Always
+      volumes:
+        - name: anywhere-door-mysql-storage
+          persistentVolumeClaim:
+            claimName: {{ printf "%s-mysql-pvc" .Values.global.namespace }}
+        - name: mysql-init-scripts
+          configMap: 
+            name: {{ printf "%s-mysql-init-scripts" .Values.global.namespace }}
+---

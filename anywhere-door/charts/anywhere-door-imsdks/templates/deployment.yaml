@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-imsdk-larkbot-deployment" .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ printf "%s-imsdk-larkbot" .Values.global.namespace }}
+  template:
+    metadata:
+      labels:
+        app: {{ printf "%s-imsdk-larkbot" .Values.global.namespace }}
+    spec:
+      containers:
+      - name: {{ printf "%s-imsdk-larkbot" .Values.global.namespace }}
+        image: {{ .Values.images.larkbotImage }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: HOST
+          value: {{ printf "%s-control-plane-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
+        - name: PORT
+          value: "80"
+        - name: USERNAME
+          value: {{ .Values.global.username | quote }}
+        - name: TOKEN
+          value: {{ .Values.larkbotConfig.token | quote }}
+        - name: IMSDK_NAME
+          value: {{ .Values.larkbotConfig.name }}
+        - name: APP_ID
+          value: {{ .Values.larkbotConfig.appId }}
+        - name: APP_SECRET
+          value: {{ .Values.larkbotConfig.appSecret }}
+        - name: OPEN_ID
+          value: {{ .Values.larkbotConfig.openId }}
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+---

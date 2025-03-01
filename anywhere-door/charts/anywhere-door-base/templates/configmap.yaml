@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: {{ printf "%s-mysql-init-scripts" .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+data: 
+  init.sql: |-
+    {{ printf "CREATE DATABASE %s;" .Values.mysql.dbName }}
+---

@@ -1,0 +1,97 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-manager-deployment" .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ printf "%s-manager" .Values.global.namespace }}
+  template:
+    metadata:
+      labels:
+        app: {{ printf "%s-manager" .Values.global.namespace }}
+    spec:
+      containers:
+      - name: {{ printf "%s-manager" .Values.global.namespace }}
+        image: {{ .Values.images.managerImage }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DB_IP
+          value: {{ printf "%s-mysql-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_NAME
+          value: {{ .Values.mysql.dbName | quote }}
+        - name: DB_USER
+          value: "root"
+        - name: DB_PASSWORD
+          value: {{ .Values.mysql.rootPassword | quote }}
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-control-plane-deployment" .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ printf "%s-control-plane" .Values.global.namespace }}
+  template:
+    metadata:
+      labels:
+        app: {{ printf "%s-control-plane" .Values.global.namespace }}
+    spec:
+      containers:
+      - name: {{ printf "%s-control-plane" .Values.global.namespace }}
+        image: {{ .Values.images.controlPlaneImage }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DB_IP
+          value: {{ printf "%s-mysql-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_NAME
+          value: {{ .Values.mysql.dbName | quote }}
+        - name: DB_USER
+          value: "root"
+        - name: DB_PASSWORD
+          value: {{ .Values.mysql.rootPassword | quote }}
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-manager-webui-deployment" .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ printf "%s-manager-webui" .Values.global.namespace }}
+  template:
+    metadata:
+      labels:
+        app: {{ printf "%s-manager-webui" .Values.global.namespace }}
+    spec:
+      containers:
+      - name: {{ printf "%s-manager-webui" .Values.global.namespace }}
+        image: {{ .Values.images.managerWebUiImage }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: HOST
+          value: {{ printf "%s-manager-service.%s" .Values.global.namespace .Values.global.namespace }}
+        - name: PORT
+          value: "80"
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+---

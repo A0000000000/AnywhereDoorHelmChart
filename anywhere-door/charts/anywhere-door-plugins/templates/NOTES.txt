@@ -1,0 +1,5 @@
+1. 创建plugin资源，包括
+  * aria2
+  * glances
+  * pve
+  * k8s

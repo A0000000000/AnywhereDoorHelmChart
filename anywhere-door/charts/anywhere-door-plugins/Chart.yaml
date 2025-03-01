@@ -1,0 +1,10 @@
+apiVersion: v2
+name: anywhere-door-plugins
+description: AnywhereDoorPlugins Helm Chart
+type: application
+version: 0.1.0
+appVersion: "1.16.0"
+maintainers:
+- name: maoyanluo
+  email: mengxin_zzl@outlook.com
+  

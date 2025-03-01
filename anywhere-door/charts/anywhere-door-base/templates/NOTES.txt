@@ -1,0 +1,9 @@
+1. AnywhereDoor基本资源创建
+  * 命名空间
+  * 存储类
+
+2. AnywhereDoor基本容器创建，包括以下容器
+  * 数据库MySQL
+  * 后台管理
+  * 控制平面
+  * 后台管理WebUI

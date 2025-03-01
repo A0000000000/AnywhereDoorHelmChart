@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ printf "%s-imsdk-wxbot-statefulset" .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+spec:
+  serviceName: {{ printf "%s-imsdk-wxbot-service" .Values.global.namespace }}
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ printf "%s-imsdk-wxbot" .Values.global.namespace }}
+  template:
+    metadata:
+      labels:
+        app: {{ printf "%s-imsdk-wxbot" .Values.global.namespace }}
+    spec:
+      containers:
+      - name: {{ printf "%s-imsdk-wxbot" .Values.global.namespace }}
+        image: {{ .Values.images.wxbotImage }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ADMIN_WXID
+          value: {{ .Values.wxbotConfig.adminWxid | quote }}
+        - name: HOST
+          value: {{ printf "%s-control-plane-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
+        - name: PORT
+          value: "80"
+        - name: USERNAME
+          value: {{ .Values.global.username | quote }}
+        - name: TOKEN
+          value: {{ .Values.wxbotConfig.token | quote }}
+        - name: IMSDK_NAME
+          value: {{ .Values.wxbotConfig.name | quote }}
+        - name: API_GEWE
+          value: {{ .Values.wxbotConfig.apiGewe | quote }}
+        - name: WX_COLLECT
+          value: {{ printf "http://%s-imsdk-wxbot-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: anywhere-door-imsdk-wxbot-storage
+          mountPath: /ws/src/session
+      restartPolicy: Always
+      volumes:
+        - name: anywhere-door-imsdk-wxbot-storage
+          persistentVolumeClaim:
+            claimName: {{ printf "%s-imsdk-wxbot-pvc" .Values.global.namespace }}
+---

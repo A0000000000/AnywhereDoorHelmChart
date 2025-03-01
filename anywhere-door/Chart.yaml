@@ -1,0 +1,21 @@
+apiVersion: v2
+name: anywhere-door
+description: AnywhereDoor Helm Chart
+type: application
+version: 0.1.0
+appVersion: "1.16.0"
+dependencies:
+- name: anywhere-door-base
+  version: 0.1.0
+  repository: "file://./charts"
+- name: anywhere-door-imsdks
+  version: 0.1.0
+  repository: "file://./charts"
+- name: anywhere-door-plugins
+  version: 0.1.0
+  repository: "file://./charts"
+
+maintainers:
+- name: maoyanluo
+  email: mengxin_zzl@outlook.com
+  

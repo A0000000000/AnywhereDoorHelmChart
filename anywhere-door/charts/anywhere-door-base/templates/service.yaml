@@ -1,0 +1,62 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ printf "%s-mysql-service" .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ printf "%s-mysql" .Values.global.namespace }}
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3306
+    targetPort: 3306
+  selector:
+    app: {{ printf "%s-mysql" .Values.global.namespace }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ printf "%s-manager-service" .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ printf "%s-manager" .Values.global.namespace }}
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: {{ printf "%s-manager" .Values.global.namespace }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ printf "%s-control-plane-service" .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ printf "%s-control-plane" .Values.global.namespace }}
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: {{ printf "%s-control-plane" .Values.global.namespace }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ printf "%s-manager-webui-service" .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ printf "%s-manager-webui" .Values.global.namespace }}
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: {{ .Values.nodePorts.managerWebUiPort }}
+  selector:
+    app: {{ printf "%s-manager-webui" .Values.global.namespace }}
+---

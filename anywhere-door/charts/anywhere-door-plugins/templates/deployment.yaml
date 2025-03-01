@@ -1,0 +1,141 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-plugin-aria2-deployment" .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ printf "%s-plugin-aria2" .Values.global.namespace }}
+  template:
+    metadata:
+      labels:
+        app: {{ printf "%s-plugin-aria2" .Values.global.namespace }}
+    spec:
+      containers:
+      - name: {{ printf "%s-plugin-aria2" .Values.global.namespace }}
+        image: {{ .Values.images.aria2Image }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: HOST
+          value: {{ printf "%s-control-plane-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
+        - name: PORT
+          value: "80"
+        - name: USERNAME
+          value: {{ .Values.global.username | quote }}
+        - name: TOKEN
+          value: {{ .Values.aria2Config.token | quote }}
+        - name: PLUGIN_NAME
+          value: {{ .Values.aria2Config.name | quote }}
+        - name: ARIA2_RPC
+          value: {{ .Values.aria2Config.aria2Rpc | quote }}
+        - name: ARIA2_TOKEN
+          value: {{ .Values.aria2Config.aria2Token | quote }}
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-plugin-glances-deployment" .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ printf "%s-plugin-glances" .Values.global.namespace }}
+  template:
+    metadata:
+      labels:
+        app: {{ printf "%s-plugin-glances" .Values.global.namespace }}
+    spec:
+      containers:
+      - name: {{ printf "%s-plugin-glances" .Values.global.namespace }}
+        image: {{ .Values.images.glancesImage }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: HOST
+          value: {{ printf "%s-control-plane-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
+        - name: PORT
+          value: "80"
+        - name: USERNAME
+          value: {{ .Values.global.username | quote }}
+        - name: TOKEN
+          value: {{ .Values.glancesConfig.token | quote }}
+        - name: PLUGIN_NAME
+          value: {{ .Values.glancesConfig.name | quote }}
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-plugin-pve-deployment" .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ printf "%s-plugin-pve" .Values.global.namespace }}
+  template:
+    metadata:
+      labels:
+        app: {{ printf "%s-plugin-pve" .Values.global.namespace }}
+    spec:
+      containers:
+      - name: {{ printf "%s-plugin-pve" .Values.global.namespace }}
+        image: {{ .Values.images.pveImage }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: HOST
+          value: {{ printf "%s-control-plane-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
+        - name: PORT
+          value: "80"
+        - name: USERNAME
+          value: {{ .Values.global.username | quote }}
+        - name: TOKEN
+          value: {{ .Values.pveConfig.token | quote }}
+        - name: PLUGIN_NAME
+          value: {{ .Values.pveConfig.name | quote }}
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-plugin-k8s-deployment" .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ printf "%s-plugin-k8s" .Values.global.namespace }}
+  template:
+    metadata:
+      labels:
+        app: {{ printf "%s-plugin-k8s" .Values.global.namespace }}
+    spec:
+      containers:
+      - name: {{ printf "%s-plugin-k8s" .Values.global.namespace }}
+        image: {{ .Values.images.k8sImage }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: HOST
+          value: {{ printf "%s-control-plane-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
+        - name: PORT
+          value: "80"
+        - name: USERNAME
+          value: {{ .Values.global.username | quote }}
+        - name: TOKEN
+          value: {{ .Values.k8sConfig.token | quote }}
+        - name: PLUGIN_NAME
+          value: {{ .Values.k8sConfig.name | quote }}
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+---
