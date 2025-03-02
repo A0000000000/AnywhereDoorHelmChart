@@ -11,6 +11,3 @@
     * 控制平面、后台管理、后台管理WebUI对应的容器及Service
     * 飞书bot、微信bot机器人容器及对应服务(注意微信bot不会对集群外暴露端口，登录请手动部署一个NodePort类型的Service)
     * aira2、glances、pve、k8s插件容器及服务
-
-## 注意
-1. 当前插件和imsdk不会自动注册，启动完成后需要主动在WebUI中注册(后续优化)
