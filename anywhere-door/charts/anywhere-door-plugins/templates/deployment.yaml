@@ -33,6 +33,8 @@ spec:
           value: {{ .Values.aria2Config.aria2Rpc | quote }}
         - name: ARIA2_TOKEN
           value: {{ .Values.aria2Config.aria2Token | quote }}
+        - name: SELF_HOST
+          value: {{ printf "%s-plugin-aria2-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
         ports:
         - containerPort: 80
       restartPolicy: Always
@@ -67,6 +69,8 @@ spec:
           value: {{ .Values.glancesConfig.token | quote }}
         - name: PLUGIN_NAME
           value: {{ .Values.glancesConfig.name | quote }}
+        - name: SELF_HOST
+          value: {{ printf "%s-plugin-glances-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
         ports:
         - containerPort: 80
       restartPolicy: Always
@@ -101,6 +105,8 @@ spec:
           value: {{ .Values.pveConfig.token | quote }}
         - name: PLUGIN_NAME
           value: {{ .Values.pveConfig.name | quote }}
+        - name: SELF_HOST
+          value: {{ printf "%s-plugin-pve-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
         ports:
         - containerPort: 80
       restartPolicy: Always
@@ -135,6 +141,8 @@ spec:
           value: {{ .Values.k8sConfig.token | quote }}
         - name: PLUGIN_NAME
           value: {{ .Values.k8sConfig.name | quote }}
+        - name: SELF_HOST
+          value: {{ printf "%s-plugin-k8s-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
         ports:
         - containerPort: 80
       restartPolicy: Always

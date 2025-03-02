@@ -36,6 +36,8 @@ spec:
           value: {{ .Values.wxbotConfig.apiGewe | quote }}
         - name: WX_COLLECT
           value: {{ printf "http://%s-imsdk-wxbot-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
+        - name: SELF_HOST
+          value: {{ printf "%s-imsdk-wxbot-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
         ports:
         - containerPort: 80
         volumeMounts:

@@ -35,6 +35,8 @@ spec:
           value: {{ .Values.larkbotConfig.appSecret }}
         - name: OPEN_ID
           value: {{ .Values.larkbotConfig.openId }}
+        - name: SELF_HOST
+          value: {{ printf "%s-imsdk-larkbot-service.%s" .Values.global.namespace .Values.global.namespace | quote }}
         ports:
         - containerPort: 80
       restartPolicy: Always
