@@ -21,4 +21,5 @@ global:
   namespace: "anywhere-door"
   username: "maoyanluo"
   scConfig:
+    type: "smb"
     name: "smb"

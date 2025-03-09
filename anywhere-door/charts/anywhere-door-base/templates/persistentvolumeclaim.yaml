@@ -10,5 +10,10 @@ spec:
   resources:
     requests:
       storage: 128Gi
+  {{- if eq .Values.global.scConfig.type "smb" -}}
   storageClassName: {{ printf "%s-%s" .Values.global.namespace .Values.global.scConfig.name }}
+  {{- end -}}
+  {{- if eq .Values.global.scConfig.type "raw" -}}
+  storageClassName: {{ .Values.global.scConfig.name }}
+  {{- end -}}
 ---

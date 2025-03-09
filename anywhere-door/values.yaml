@@ -1,76 +1,111 @@
+# 基础包的配置
 anywhere-door-base:
+  # 如果需要单独抽离一个StorageClass来做存储，完善这个配置，只支持smb方式
+  # 使用现有的存储类的话，这块配置忽略即可，配置好global下的名字就行
+  # 详细的StorageClass的配置可以看一下base包下的模版
   scConfig:
+    # smb的用户名密码，需要预先在集群中创建好，这里直接使用，主要是smb可以创建多个存储类，所以不在这个项目进行用户名密码配置
     secretName: "smb-secret"
+    # Secret资源所在的命名空间，这个由于可能被多个StorageClass共享，所以放在任意一个命名空间都可以
     secretNamespace: "anywhere-door"
+    # smb的挂载路径
     source: "/anywhere-door"
   
+  # base包下所需要的镜像
   images:
+    # mysql镜像，使用原版镜像即可
     mysqlImage: "mysql:latest"
+    # 下面三个镜像需要用户自己build，每个镜像的打包方式在对应仓库的README文件下都有说明，参照打包即可，把名字替换为打包时设置的名字就行
     managerImage: "192.168.25.5:31100/maoyanluo/anywhere-door-manager:0.8.8"
     controlPlaneImage: "192.168.25.5:31100/maoyanluo/anywhere-door-control-plane:0.1.6"
     managerWebUiImage: "192.168.25.5:31100/maoyanluo/anywhere-door-manager-webui:0.2.4"
   
+  # 网页管理对外暴露的接口，使用NodePort方式暴露，也是本项目中唯一一个需要一直暴露的端口
   nodePorts:
     managerWebUiPort: 80
   
+  # mysql的基础配置，数据库名字和密码，可以直接使用默认
   mysql:
     dbName: "anywhere_door"
     rootPassword: "p@ssword"
 
-
+# imsdk的配置
 anywhere-door-imsdks:
+  # 镜像名字，同base包
   images:
     larkbotImage: "192.168.25.5:31100/maoyanluo/anywhere-door-imsdk-larkbot:0.4.8"
     wxbotImage: "192.168.25.5:31100/maoyanluo/anywhere-door-imsdk-wxbot:0.4.4"
   
+  # larkbot的配置
   larkbotConfig:
+    # 表明是否要部署一个larkbot，true是部署，false是不部署，需要用字符串
     enable: "false"
+    # 名字和token可以保持默认
     name: "larkbot"
     token: "larkbot-token"
+    # lark的配置，详见仓库的README文件
     appId: "app id"
     appSecret: "app secret"
     openId: "open id"
   
+  # wxbot的配置
   wxbotConfig:
+    # 同lark的配置
     enable: "false"
     name: "wxbot"
     token: "wxbot-token"
+    # 管理员的微信号
     adminWxid: "wxid"
+    # gewe的服务地址
     apiGewe: "http://gewe-api"
 
-
+# plugin配置
 anywhere-door-plugins:
+  # 镜像名字，同base包
   images:
     aria2Image: "192.168.25.5:31100/maoyanluo/anywhere-door-plugin-aria2:0.9.4"
     glancesImage: "192.168.25.5:31100/maoyanluo/anywhere-door-plugin-glances:0.4.5"
     pveImage: "192.168.25.5:31100/maoyanluo/anywhere-door-plugin-pve:0.5.5"
     k8sImage: "192.168.25.5:31100/maoyanluo/anywhere-door-plugin-k8s:0.1.9"
   
+  # aria2的配置
   aria2Config:
+    # 同imsdk
     enable: "false"
     name: "aria2"
     token: "aria2-token"
+    # aria2的jsonrpc地址
     aria2Rpc: "http://aria2-rpc/json-rpc"
+    # aria2的密钥
     aria2Token: "aria2-token"
   
   glancesConfig:
+    # 同imsdk
     enable: "false"
     name: "glances"
     token: "glances-token"
   
   pveConfig:
+    # 同imsdk
     enable: "false"
     name: "pve"
     token: "pve-token"
   
   k8sConfig:
+    # 同imsdk
     enable: "false"
     name: "k8s"
     token: "k8s-token"
 
-
+# 全局配置
 global:
+  # 资源所在的命名空间，可以直接使用默认
   namespace: "anywhere-door"
+  # 项目中的用户名，需要在完成部署后，在后台管理中使用这个名字注册
   username: "maoyanluo"
+  # 存储类配置
   scConfig:
+    # type现在有两种取值，如果是smb的话，项目会自己创建一个StorageClass来使用，如果是raw的话，会直接使用下面name中的名字作为存储类使用
+    type: "smb"
+    # 存储类名称，如果type是smb的，会拼接上命名空间的名字
     name: "smb"
