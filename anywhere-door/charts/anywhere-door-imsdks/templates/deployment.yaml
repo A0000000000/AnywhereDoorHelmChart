@@ -1,4 +1,5 @@
 ---
+{{- if eq .Values.larkbotConfig.enable "true" -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -41,3 +42,4 @@ spec:
         - containerPort: 80
       restartPolicy: Always
 ---
+{{- end -}}

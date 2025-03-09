@@ -1,4 +1,5 @@
 ---
+{{- if eq .Values.aria2Config.enable "true" -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -14,6 +15,8 @@ spec:
   selector:
     app: {{ printf "%s-plugin-aria2" .Values.global.namespace }}
 ---
+{{- end -}}
+{{- if eq .Values.glancesConfig.enable "true" -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -29,6 +32,8 @@ spec:
   selector:
     app: {{ printf "%s-plugin-glances" .Values.global.namespace }}
 ---
+{{- end -}}
+{{- if eq .Values.pveConfig.enable "true" -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -44,6 +49,8 @@ spec:
   selector:
     app: {{ printf "%s-plugin-pve" .Values.global.namespace }}
 ---
+{{- end -}}
+{{- if eq .Values.k8sConfig.enable "true" -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -59,3 +66,4 @@ spec:
   selector:
     app: {{ printf "%s-plugin-k8s" .Values.global.namespace }}
 ---
+{{- end -}}

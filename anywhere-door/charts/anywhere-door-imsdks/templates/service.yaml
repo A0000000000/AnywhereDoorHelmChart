@@ -1,4 +1,5 @@
 ---
+{{- if eq .Values.larkbotConfig.enable "true" -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -14,6 +15,8 @@ spec:
   selector:
     app: {{ printf "%s-imsdk-larkbot" .Values.global.namespace }}
 ---
+{{- end -}}
+{{- if eq .Values.wxbotConfig.enable "true" -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -29,4 +32,4 @@ spec:
   selector:
     app: {{ printf "%s-imsdk-wxbot" .Values.global.namespace }}
 ---
-
+{{- end -}}

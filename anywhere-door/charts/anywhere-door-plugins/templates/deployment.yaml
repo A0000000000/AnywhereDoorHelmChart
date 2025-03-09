@@ -1,4 +1,5 @@
 ---
+{{- if eq .Values.aria2Config.enable "true" -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -39,6 +40,8 @@ spec:
         - containerPort: 80
       restartPolicy: Always
 ---
+{{- end -}}
+{{- if eq .Values.glancesConfig.enable "true" -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -75,6 +78,8 @@ spec:
         - containerPort: 80
       restartPolicy: Always
 ---
+{{- end -}}
+{{- if eq .Values.pveConfig.enable "true" -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -111,6 +116,8 @@ spec:
         - containerPort: 80
       restartPolicy: Always
 ---
+{{- end -}}
+{{- if eq .Values.k8sConfig.enable "true" -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -147,3 +154,4 @@ spec:
         - containerPort: 80
       restartPolicy: Always
 ---
+{{- end -}}

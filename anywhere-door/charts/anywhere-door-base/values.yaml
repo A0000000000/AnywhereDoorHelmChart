@@ -1,23 +1,23 @@
 scConfig:
-  secretName: "smb的secret名字"
-  secretNamespace: "secret所在的名称空间"
-  source: "smb的挂载点"
+  secretName: "smb-secret"
+  secretNamespace: "anywhere-door"
+  source: "/anywhere-door"
 
 images:
-  mysqlImage: "mysql的镜像名字"
-  managerImage: "后台管理的镜像名字"
-  controlPlaneImage: "控制平面的镜像"
-  managerWebUiImage: "控制平面webui的镜像"
+  mysqlImage: "mysql:latest"
+  managerImage: "192.168.25.5:31100/maoyanluo/anywhere-door-manager:0.8.8"
+  controlPlaneImage: "192.168.25.5:31100/maoyanluo/anywhere-door-control-plane:0.1.6"
+  managerWebUiImage: "192.168.25.5:31100/maoyanluo/anywhere-door-manager-webui:0.2.4"
 
 nodePorts:
   managerWebUiPort: 80
 
 mysql:
-  dbName: "数据库名字"
-  rootPassword: "数据库root账户密码"
+  dbName: "anywhere_door"
+  rootPassword: "p@ssword"
 
 global:
-  namespace: "资源所在的k8s命名空间"
-  username: "用户名"
+  namespace: "anywhere-door"
+  username: "maoyanluo"
   scConfig:
-    name: "存储类的名称, 后续创建PV都会使用这个存储类"
+    name: "smb"

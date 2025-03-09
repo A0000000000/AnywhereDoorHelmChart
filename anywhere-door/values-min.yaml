@@ -12,11 +12,6 @@ anywhere-door-base:
   
   nodePorts:
     managerWebUiPort: 80
-  
-  mysql:
-    dbName: "anywhere_door"
-    rootPassword: "p@ssword"
-
 
 anywhere-door-imsdks:
   images:
@@ -25,16 +20,12 @@ anywhere-door-imsdks:
   
   larkbotConfig:
     enable: "false"
-    name: "larkbot"
-    token: "larkbot-token"
     appId: "app id"
     appSecret: "app secret"
     openId: "open id"
   
   wxbotConfig:
     enable: "false"
-    name: "wxbot"
-    token: "wxbot-token"
     adminWxid: "wxid"
     apiGewe: "http://gewe-api"
 
@@ -48,29 +39,19 @@ anywhere-door-plugins:
   
   aria2Config:
     enable: "false"
-    name: "aria2"
-    token: "aria2-token"
     aria2Rpc: "http://aria2-rpc/json-rpc"
     aria2Token: "aria2-token"
   
   glancesConfig:
     enable: "false"
-    name: "glances"
-    token: "glances-token"
   
   pveConfig:
     enable: "false"
-    name: "pve"
-    token: "pve-token"
   
   k8sConfig:
     enable: "false"
-    name: "k8s"
-    token: "k8s-token"
-
 
 global:
-  namespace: "anywhere-door"
   username: "maoyanluo"
   scConfig:
     name: "smb"

@@ -1,4 +1,5 @@
 ---
+{{- if eq .Values.wxbotConfig.enable "true" -}}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -49,3 +50,4 @@ spec:
           persistentVolumeClaim:
             claimName: {{ printf "%s-imsdk-wxbot-pvc" .Values.global.namespace }}
 ---
+{{- end -}}

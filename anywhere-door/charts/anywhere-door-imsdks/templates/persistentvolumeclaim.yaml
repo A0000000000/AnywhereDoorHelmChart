@@ -1,4 +1,5 @@
 ---
+{{- if eq .Values.wxbotConfig.enable "true" -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -12,3 +13,4 @@ spec:
       storage: 1Gi
   storageClassName: {{ printf "%s-%s" .Values.global.namespace .Values.global.scConfig.name }}
 ---
+{{- end -}}

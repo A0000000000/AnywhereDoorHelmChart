@@ -1,29 +1,33 @@
 images:
-  aria2Image: "aria2插件镜像"
-  glancesImage: "glances插件镜像"
-  pveImage: "pve插件镜像"
-  k8sImage: "k8s插件镜像"
+  aria2Image: "192.168.25.5:31100/maoyanluo/anywhere-door-plugin-aria2:0.9.4"
+  glancesImage: "192.168.25.5:31100/maoyanluo/anywhere-door-plugin-glances:0.4.5"
+  pveImage: "192.168.25.5:31100/maoyanluo/anywhere-door-plugin-pve:0.5.5"
+  k8sImage: "192.168.25.5:31100/maoyanluo/anywhere-door-plugin-k8s:0.1.9"
 
 aria2Config:
-  token: "aria2插件令牌"
-  name: "aria2名称"
-  aria2Rpc: "aria2 rpc地址"
-  aria2Token: "aria2 令牌"
+  enable: "false"
+  name: "aria2"
+  token: "aria2-token"
+  aria2Rpc: "http://aria2-rpc/json-rpc"
+  aria2Token: "aria2-token"
 
 glancesConfig:
-  token: "glances插件令牌"
-  name: "glances插件名称"
+  enable: "false"
+  name: "glances"
+  token: "glances-token"
 
 pveConfig:
-  token: "pve插件令牌"
-  name: "pve插件名称"
+  enable: "false"
+  name: "pve"
+  token: "pve-token"
 
 k8sConfig:
-  token: "k8s插件令牌"
-  name: "k8s插件名称"
+  enable: "false"
+  name: "k8s"
+  token: "k8s-token"
 
 global:
-  namespace: "资源所在的k8s命名空间"
-  username: "用户名"
+  namespace: "anywhere-door"
+  username: "maoyanluo"
   scConfig:
-    name: "存储类的名称, 后续创建PV都会使用这个存储类"
+    name: "smb"
