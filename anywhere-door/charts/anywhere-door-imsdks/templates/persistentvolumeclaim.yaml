@@ -11,11 +11,11 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  {{- if eq .Values.global.scConfig.type "smb" -}}
+  {{- if eq .Values.global.scConfig.type "smb" }}
   storageClassName: {{ printf "%s-%s" .Values.global.namespace .Values.global.scConfig.name }}
-  {{- end -}}
-  {{- if eq .Values.global.scConfig.type "raw" -}}
+  {{- end }}
+  {{- if eq .Values.global.scConfig.type "raw" }}
   storageClassName: {{ .Values.global.scConfig.name }}
-  {{- end -}}
+  {{- end }}
 ---
 {{- end -}}
